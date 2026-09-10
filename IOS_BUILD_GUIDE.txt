@@ -1,0 +1,41 @@
+GUIDE: HOW TO BUILD iOS (.IPA) FROM WINDOWS USING CODEMAGIC
+
+Since you are on Windows, you cannot run 'flutter build ipa' locally.
+Follow these steps to build using the Cloud:
+
+STEP 1: PREPARE YOUR CODE
+1. Make sure all your changes are committed.
+2. Upload your project to GitHub (create a private repository).
+
+STEP 2: SETUP CODEMAGIC
+1. Go to https://codemagic.io and sign up with GitHub.
+2. Click "Add application" and select your GitHub repository.
+3. Select "Flutter App" as the project type.
+
+STEP 3: APPLE DEVELOPER ACCOUNT (MANDATORY)
+1. You need an active Apple Developer Program membership ($99/year).
+2. Go to App Store Connect -> Users and Access -> Keys.
+3. Generate an "API Key". You will need:
+   - Issuer ID
+   - Key ID
+   - The .p8 Key file
+
+STEP 4: CONFIGURE CODEMAGIC BUILD
+1. In Codemagic, go to your App settings.
+2. Click on "Webhooks" and enable "Build on Push" (optional).
+3. Go to the "Build" tab:
+   - Target: iOS
+   - Mode: Release
+   - Flutter version: Channel stable
+4. Go to the "Distribution" tab -> "iOS code signing":
+   - Select "Automatic"
+   - Connect your Apple Developer Portal using the API Key from STEP 3.
+5. Codemagic will now be able to generate Certificates and Provisioning Profiles for you.
+
+STEP 5: START BUILD
+1. Click "Start new build".
+2. Select your branch (main/master).
+3. Wait 10-15 minutes.
+4. Once finished, you can download the .ipa file or Codemagic can automatically upload it to TestFlight for your users.
+
+NOTE: Without an Apple Developer Account, you cannot install the app on a physical iPhone.
